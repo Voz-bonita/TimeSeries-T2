@@ -18,11 +18,9 @@ mstl(treinamento) %>% plot()
 
 # Item b)
 kpss.test(treinamento, null = "Trend")
-diffs <- treinamento %>% ndiffs() #> 1
-sdiffs <- treinamento %>%
-    diff(differences = diffs) %>%
-    nsdiffs() #> 0
-treinamento_estacionario <- treinamento %>% diff(differences = diffs)
+out_diff_trein <- treinamento %>% diff_series(lag = lag)
+c(out_diff_trein$diff_simples, out_diff_trein$diff_sasonal)
+treinamento_estacionario <- out_diff_trein$ts
 
 treinamento_estacionario %>%
     autoplot() +
@@ -39,7 +37,7 @@ box_cox(treinamento,
 )
 treinamento_transformado <- box_cox__(treinamento, lambda = 0)
 treinamento_transformado %>% kpss.test(treinamento, null = "Trend")
-out_diff_trein_trans <- treinamento_transformado %>% diff_series(lag = 12)
+out_diff_trein_trans <- treinamento_transformado %>% diff_series(lag = lag)
 c(out_diff_trein_trans$diff_simples, out_diff_trein_trans$diff_sasonal)
 trein_trans_estac <- out_diff_trein_trans$ts
 
