@@ -7,7 +7,7 @@ source("auxiliar_functions.r", encoding = "UTF-8")
 LAG_MAP <- c("MONTHLY" = 12)
 
 ids <- c(2119, 2539)
-id_escolhido <- ids[1]
+id_escolhido <- ids[2]
 serie_escolhida <- M3[[id_escolhido]]
 serie_escolhida %>% plot()
 treinamento <- serie_escolhida$x
