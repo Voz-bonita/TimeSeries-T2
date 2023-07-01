@@ -51,8 +51,9 @@ pacf(trein_trans_estac)
 
 # Item c)
 ets(treinamento, model = "AAA")
-ets_mod <- ets(treinamento, model = "MAA")
+ets(treinamento, model = "MAA")
 ets(treinamento, model = "MAM")
+ets_mod <- ets(treinamento, model = "MMM")
 ets_mod_boxcox <- ets(treinamento, model = "AAA", lambda = 0) # AAA é o unico modelo possível por causa do lambda e modelos instaveis
 
 # Item d)
