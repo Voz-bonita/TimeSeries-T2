@@ -35,7 +35,7 @@ pacf(treinamento_estacionario)
 
 box_cox(treinamento,
     lambda = seq(-3, 3, 1)[-5],
-    path_to_plot = "assets/teste.png"
+    path_to_plot = "assets/box_cox_escolha.png"
 )
 treinamento_transformado <- box_cox__(treinamento, lambda = 0)
 treinamento_transformado %>% kpss.test(treinamento, null = "Trend")
@@ -57,9 +57,8 @@ ets_mod_boxcox <- ets(treinamento, model = "AAA", lambda = 0) # AAA é o unico m
 
 # Item d)
 
-residuals_analysis(ets_mod, "assets/teste.png") %>% format_tab("", digits = 3, "latex")
-residuals_analysis(ets_mod_boxcox, "assets/teste.png") %>% format_tab("", digits = 3, "latex")
+residuals_analysis(ets_mod, "assets/ets_mod.png") %>% format_tab("", digits = 3, "latex")
+residuals_analysis(ets_mod_boxcox, "assets/ets_mod_boxcox.png") %>% format_tab("", digits = 3, "latex")
 # A FAZER: Incluir os modelos ARIMA
 
 # Item e)
-
