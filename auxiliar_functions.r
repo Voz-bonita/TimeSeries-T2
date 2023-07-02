@@ -79,3 +79,9 @@ residuals_analysis <- function(model, path_to_plot) {
     )
     return(testes_df)
 }
+
+prediction_plot <- function(forecast_prediction) {
+    return(autoplot(forecast_prediction) +
+        geom_line(linewidth = 1.3) +
+        theme_bw())
+}

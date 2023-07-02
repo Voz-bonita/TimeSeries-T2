@@ -1,7 +1,7 @@
 if (!require("pacman")) {
     install.packages("pacman")
 }
-pacman::p_load("forecast", "Mcomp", "tseries", "ggplot2")
+pacman::p_load("forecast", "Mcomp", "tseries", "ggplot2", "ggpubr")
 source("auxiliar_functions.r", encoding = "UTF-8")
 
 LAG_MAP <- c("MONTHLY" = 12)
@@ -12,6 +12,7 @@ serie_escolhida <- M3[[id_escolhido]]
 serie_escolhida %>% plot()
 treinamento <- serie_escolhida$x
 lag <- LAG_MAP[[serie_escolhida$period]]
+horizonte <- serie_escolhida$h
 
 # Item a)
 mstl(treinamento) %>% plot()
@@ -61,3 +62,13 @@ residuals_analysis(ets_mod_boxcox, "assets/ets_mod_boxcox.png") %>% format_tab("
 # A FAZER: Incluir os modelos ARIMA
 
 # Item e)
+
+# item f)
+
+p3 <- forecast(ets_mod, h = horizonte, level = 95) %>%
+    prediction_plot()
+p4 <- forecast(ets_mod_boxcox, h = horizonte, level = 95) %>%
+    prediction_plot()
+
+ggarrange(p3, p4) %>%
+    ggsave(filename = "assets/predictions.png", .)
