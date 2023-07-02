@@ -85,3 +85,8 @@ prediction_plot <- function(forecast_prediction) {
         geom_line(linewidth = 1.3) +
         theme_bw())
 }
+
+MAE <- function(train, test, model, h) {
+    predictions <- model(train) %>% forecast::forecast(h = h)
+    return(mean(abs(test - predictions[["mean"]])))
+}

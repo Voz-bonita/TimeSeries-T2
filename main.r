@@ -11,6 +11,7 @@ id_escolhido <- ids[2]
 serie_escolhida <- M3[[id_escolhido]]
 serie_escolhida %>% plot()
 treinamento <- serie_escolhida$x
+teste <- serie_escolhida$xx
 lag <- LAG_MAP[[serie_escolhida$period]]
 horizonte <- serie_escolhida$h
 
@@ -72,3 +73,14 @@ p4 <- forecast(ets_mod_boxcox, h = horizonte, level = 95) %>%
 
 ggarrange(p3, p4) %>%
     ggsave(filename = "assets/predictions.png", .)
+
+# item g)
+models <- c(
+    "auto.arima" = auto.arima,
+    # ses, holt,
+    "ets" = ets, "stlf" = stlf,
+    "bats" = bats, "tbats" = tbats
+)
+MAEs <- map_dbl(models, ~ MAE(model = .x, train = treinamento, test = teste, h = horizonte))
+data.frame("Implementação" = names(MAEs), "MAE" = MAEs) %>%
+    format_tab("", digits = 4, format = "latex")
