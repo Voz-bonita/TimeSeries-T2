@@ -8,7 +8,7 @@ format_tab <- function(df, caption, ...) {
         ...
     ) %>%
         kable_styling(
-            latex_options = c('striped', 'hold_position'),
+            latex_options = c("striped", "hold_position"),
             full_width = F
         )
     return(tabela)
@@ -35,15 +35,15 @@ box_cox <- function(x, lambda, path_to_plot) {
 }
 
 diff_series <- function(x, lag) {
-    diffs <- x %>% ndiffs()
+    diffs <- x %>% forecast::ndiffs()
     if (diffs) {
         x <- x %>% diff(diffs)
-        sdiffs <- x %>% nsdiffs()
+        sdiffs <- x %>% forecast::nsdiffs()
     } else {
-        sdiffs <- x %>% nsdiffs()
+        sdiffs <- x %>% forecast::nsdiffs()
     }
     if (sdiffs) {
-        x <- x %>% diff(nsdiffs, lag = lag)
+        x <- x %>% diff(forecast::nsdiffs, lag = lag)
     }
 
     return(list("ts" = x, diff_simples = diffs, diff_sasonal = sdiffs))
@@ -61,13 +61,21 @@ residuals_analysis <- function(model, path_to_plot) {
     pacf(residuals)
     dev.off()
 
-    trend_test <- kpss.test(residuals, null = "Trend")
+    trend_test <- tseries::kpss.test(residuals, null = "Trend")
     independence_test <- Box.test(residuals, lag = 15, type = "Ljung-Box")
     normality_test <- shapiro.test(residuals)
     testes_df <- data.frame(
-        "Teste" = c("KPSS", "Ljung-Box", "Shapiro-Wilk"), 
-        "Estatística do Teste" = c(trend_test[["statistic"]], independence_test[["statistic"]], normality_test[["statistic"]]),
-        "p-valor" = c(trend_test[["p.value"]], independence_test[["p.value"]], normality_test[["p.value"]])
+        "Teste" = c("KPSS", "Ljung-Box", "Shapiro-Wilk"),
+        "Estatística do Teste" = c(
+            trend_test[["statistic"]],
+            independence_test[["statistic"]],
+            normality_test[["statistic"]]
+        ),
+        "p-valor" = c(
+            trend_test[["p.value"]],
+            independence_test[["p.value"]],
+            normality_test[["p.value"]]
+        )
     )
     return(testes_df)
 }
