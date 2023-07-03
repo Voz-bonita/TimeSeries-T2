@@ -54,8 +54,8 @@ ets_models <- c("AAA", "MAA", "MAM")
 model_selection_ets(ets_models, treinamento) %>%
     format_tab("", format = "latex", digits = 3)
 ets_mod <- ets(treinamento, model = "MAM")
-ets_mod_boxcox <- ets(treinamento, model = "AAA", lambda = 0) # AAA é o unico modelo possível por causa do lambda e modelos instaveis
-
+ets_mod_boxcox <- ets(treinamento, model = "AAA", lambda = -.24)
+min(box_cox__(treinamento, lambda = -0.24))
 # Item d)
 
 residuals_analysis(ets_mod, "assets/ets_mod.png") %>% format_tab("", digits = 3, "latex")
