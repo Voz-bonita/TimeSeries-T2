@@ -50,6 +50,9 @@ pacf(trein_trans_estac)
 # A FAZER: Escolher os modelos baseados nos gráficos ou rodar loops para valores pequenos de p, q, P, Q
 
 # Item c)
+ets_models <- c("AAA", "MAA", "MAM")
+model_selection_ets(ets_models, treinamento) %>%
+    format_tab("", format = "latex", digits = 3)
 ets_mod <- ets(treinamento, model = "MAM")
 ets_mod_boxcox <- ets(treinamento, model = "AAA", lambda = 0) # AAA é o unico modelo possível por causa do lambda e modelos instaveis
 

@@ -49,6 +49,14 @@ diff_series <- function(x, lag) {
     return(list("ts" = x, diff_simples = diffs, diff_sasonal = sdiffs))
 }
 
+model_selection_ets <- function(models, train) {
+    aics <- models %>%
+        purrr::map_dbl(~ forecast::ets(y = train, model = .x)[["aicc"]])
+    df_select <- data.frame("ETS" = models, "AICc" = aics) %>%
+        dplyr::arrange(desc(AICc))
+    return(df_select)
+}
+
 residuals_analysis <- function(model, path_to_plot) {
     residuals <- model[["residuals"]]
 
