@@ -97,6 +97,11 @@ prediction_plot <- function(forecast_prediction) {
 MAE <- function(train, test, model, h, name) {
     if (name %in% c("ses", "holt")) {
         predictions <- model(train)
+    } else if (name %in% c(
+        "ARIMA (manual)", "ARIMA (manual)(Box-Cox)",
+        "ETS (manual)", "ETS (manual)(Box-Cox)"
+    )) {
+        predictions <- model %>% forecast::forecast(h = h)
     } else {
         predictions <- model(train) %>% forecast::forecast(h = h)
     }

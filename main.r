@@ -89,8 +89,19 @@ p4 <- forecast(ets_mod_boxcox, h = horizonte, level = 95) %>%
 ggarrange(p3, p4) %>%
     ggsave(filename = "assets/predictions.png", .)
 
+
 # item g)
-models <- c(
+arima_mod <- Arima(
+    y = treinamento, order = c(1, 1, 3), seasonal = c(1, 0, 1)
+)
+arima_mod_boxcox <- Arima(
+    y = treinamento, order = c(1, 1, 2), seasonal = c(0, 0, 2), lambda = -0.24
+)
+models <- list(
+    "ARIMA (manual)" = arima_mod,
+    "ARIMA (manual)(Box-Cox)" = arima_mod_boxcox,
+    "ETS (manual)" = ets_mod,
+    "ETS (manual)(Box-Cox)" = ets_mod_boxcox,
     "auto.arima" = auto.arima,
     "ses" = ses, "holt" = holt,
     "ets" = ets, "stlf" = stlf,
