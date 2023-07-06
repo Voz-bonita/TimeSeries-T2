@@ -94,7 +94,11 @@ prediction_plot <- function(forecast_prediction) {
         theme_bw())
 }
 
-MAE <- function(train, test, model, h) {
-    predictions <- model(train) %>% forecast::forecast(h = h)
+MAE <- function(train, test, model, h, name) {
+    if (name %in% c("ses", "holt")) {
+        predictions <- model(train)
+    } else {
+        predictions <- model(train) %>% forecast::forecast(h = h)
+    }
     return(mean(abs(test - predictions[["mean"]])))
 }

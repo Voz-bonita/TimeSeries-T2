@@ -92,10 +92,12 @@ ggarrange(p3, p4) %>%
 # item g)
 models <- c(
     "auto.arima" = auto.arima,
-    # ses, holt
+    "ses" = ses, "holt" = holt,
     "ets" = ets, "stlf" = stlf,
     "bats" = bats, "tbats" = tbats
 )
-MAEs <- map_dbl(models, ~ MAE(model = .x, train = treinamento, test = teste, h = horizonte))
+MAEs <- map2_dbl(models, names(models), ~ MAE(
+    model = .x, train = treinamento, test = teste, h = horizonte, name = .y
+))
 data.frame("Implementação" = names(MAEs), "MAE" = MAEs) %>%
     format_tab("", digits = 4, format = "latex")
