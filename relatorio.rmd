@@ -14,7 +14,7 @@ header-includes:
 classoption: a4paper, table
 ---
 
-## Modelos ETS
+## Seleção de Modelos ETS
 
 ### Simples
 
@@ -96,3 +96,17 @@ X-squared & Ljung-Box & 21.451 & 0.123\\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\clearpage
+
+## Previsão Pontual e Intervalar (ETS)
+
+Uma vez que o modelo ETS escolhido sem a transformação de Box-Cox falhou para o teste de normalidade, portanto, foi feito o uso da técnica de Bootstrap calculando quantis empíricos da amostra de resíduos obtida para compor as previsões intervalares, que podem ser observadas no gráfico da esquerda na figura \ref{fig:pred_ets}. Para o gráfico da direita na figura \ref{fig:pred_ets} tem-se o modelo ETS com transformação de Box-Cox, que não rejeitou a hipótese de normalidade para o teste de Shapiro-Wilk, portanto foram calculadas a partir dos quantis da distribuição normal padrão. Ambos os gráficos apresentam uma linha em vermelho que representa o caminho verdadeiro que a série percorreu.
+
+\begin{figure}[!h]
+  \label{fig:pred_ets}
+  \centering
+  \includegraphics[width=12cm]{assets/predictions.png}
+\end{figure}
+
+Um ponto interessante é que embora ambas as previsões intervalares para os dois modelos contenham os resultados reais (linha em vermelho), tem-se que o modelo ETS sem a transformação e Box-Cox aparenta ter se saído muito melhor em termos de replicar o comportamento da série e fornecer intervalos mais fechados, mas que ainda sim capturem o verdadeiro valor observado para a série.
