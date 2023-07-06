@@ -1,0 +1,73 @@
+---
+title: ""
+subtitle: ""
+author: "José Vítor Barreto Porfírio 190089971"
+date: "03/07/2023"
+output: pdf_document
+header-includes:
+  - \usepackage{indentfirst}
+  - \usepackage{booktabs}
+  - \usepackage{xcolor}
+  - \setlength{\parindent}{10ex}
+  - \renewcommand{\tablename}{Tabela}
+  - \renewcommand{\figurename}{Figura}
+classoption: a4paper, table
+---
+
+## Modelos ETS
+
+### Simples
+
+Para escolha adequada de um modelo ETS, é preciso escolher se o comportamento dos erros, tendência e sazonalidade existem na série, caso existam, então segue-se escolhendo um modelo que os descreve de forma aditiva ou multiplicativa.
+
+Utilizando a decomposição da série, identifica-se que há tendência na série e que o comportamento da tendência aparenta ser da forma aditiva, porém não é constante, tornando necessária a estimação de um parâmetro de damped. Da decomposição, também é possível observar que há sazonalidade na série, contudo, o gráfico da série não deixa claro se a sazonalidade é aditiva ou multiplicativa, um ponto que sustenta essa dúvida é que a decomposição multiplicativa também captou a sazonalidade e apresentou erros similares a um ruído branco, portanto, seguiu-se comparando os Critérios corrigidos de Akaike como indicado pela tabela \ref{tab:mod_ets}
+
+\begin{table}[!h]
+
+\caption{}
+\label{tab:mod_ets}
+\centering
+\begin{tabular}[t]{lr}
+\toprule
+ETS & AICc\\
+\midrule
+\cellcolor{gray!6}{AAdA} & \cellcolor{gray!6}{1998.441}\\
+MAdA & 1993.861\\
+\cellcolor{gray!6}{MAdM} & \cellcolor{gray!6}{1989.925}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Logo, o modelo escolhido é aquele que apresenta o menor valor de $AICc$, isto é,
+$$ETS(M, Ad, M)$$
+
+### Transformado (Box-Cox)
+
+Utilizando o mesmo parâmetro para a transformação de Box-Cox, escolhido na seção da seleção de modelos ARIMA ($\lambda = -0.24$), tem-se que o menor valor da série transformada passa a ser aproximadamente 3.61, um valor muito próximo de zero, por conseguinte não se pode trabalhar com componente de erro multiplicativa, por conta dos chamados "modelos instáveis". Lembrando que a série apresenta tendência e sazonalidade, então o único modelo possível para ser ajustado pela função `ets()` da biblioteca `forecast` em `R` é com todas as componentes aditivas. Para este ajuste, o parâmetro de damped ajustado foi igual a 1, concluindo a escolha do modelo
+
+$$ETS(A, A, A)$$
+
+Procedendo à análise de resíduos do modelo, tem-se que a figura \ref{fig:ets_box-cox} apresenta resíduos que se parecem com um ruído branco, isto é, parecem se comportar de forma independente, com média nula e variância constante. O qqplot indica que o os erros se ajustam bem à distribuição normal. Os gráficos ACF e PACF reforçam que não sobrou correlação significativa entre os erros, os únicos saltos além da faixa que chaman mais atenção nos gráficos ACF e PACF não estão no lag sazonal e estão por bem pouco fora da faixa, levando a crer que o ajuste do modelo está adequado.
+
+\begin{figure}[!h]
+  \label{fig:ets_box-cox}
+  \centering
+  \includegraphics[width=12cm]{assets/ets_mod_boxcox.png}
+\end{figure}
+
+Para apoiar a análise gráfica, a tabela \ref{tab:ets_box-cox} apresenta testes de hipóteses, suas respectivas estatísticas do teste e p-valor, levam às conclusões de que os resíduos se comportam de forma estacionária, são independentes entre si e seguem distribuição normal. Vale notar que para o teste de Ljung-Box foi utilizado `lag = 15`.
+
+\begin{table}[!h]
+\label{tab:ets_box-cox}
+\caption{}
+\centering
+\begin{tabular}[t]{llrr}
+\toprule
+  & Teste & Estatística do Teste & p.valor\\
+\midrule
+\cellcolor{gray!6}{KPSS Trend} & \cellcolor{gray!6}{KPSS} & \cellcolor{gray!6}{0.080} & \cellcolor{gray!6}{> 0.1}\\
+X-squared & Ljung-Box & 21.451 & 0.123\\
+\cellcolor{gray!6}{W} & \cellcolor{gray!6}{Shapiro-Wilk} & \cellcolor{gray!6}{0.984} & \cellcolor{gray!6}{0.192}\\
+\bottomrule
+\end{tabular}
+\end{table}
