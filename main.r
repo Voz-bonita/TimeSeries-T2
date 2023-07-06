@@ -66,7 +66,7 @@ residuals_analysis(ets_mod_boxcox, "assets/ets_mod_boxcox.png") %>% format_tab("
 
 # item f)
 
-p3 <- forecast(ets_mod, h = horizonte, level = 95) %>%
+p3 <- forecast(ets_mod, h = horizonte, level = 95, bootstrap = TRUE) %>%
     prediction_plot()
 p4 <- forecast(ets_mod_boxcox, h = horizonte, level = 95) %>%
     prediction_plot()
