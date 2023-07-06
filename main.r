@@ -66,10 +66,25 @@ residuals_analysis(ets_mod_boxcox, "assets/ets_mod_boxcox.png") %>% format_tab("
 
 # item f)
 
+df_teste_plot <- data.frame(
+    "x" = as.vector(time(teste)),
+    "y" = as.vector(teste)
+)
 p3 <- forecast(ets_mod, h = horizonte, level = 95, bootstrap = TRUE) %>%
-    prediction_plot()
+    prediction_plot() +
+    geom_line(
+        data = df_teste_plot, aes(x = `x`, y = `y`),
+        color = "red", linewidth = 0.5
+    ) +
+    scale_y_continuous(breaks = seq(4000, 16000, 4000)) +
+    coord_cartesian(ylim = c(3800, 16000))
+
 p4 <- forecast(ets_mod_boxcox, h = horizonte, level = 95) %>%
-    prediction_plot()
+    prediction_plot() +
+    geom_line(
+        data = df_teste_plot, aes(x = `x`, y = `y`),
+        color = "red", linewidth = 0.5
+    )
 
 ggarrange(p3, p4) %>%
     ggsave(filename = "assets/predictions.png", .)
