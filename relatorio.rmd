@@ -24,7 +24,7 @@ Utilizando a decomposição da série, identifica-se que há tendência na séri
 
 \begin{table}[!h]
 
-\caption{}
+\caption{Critérios de seleção de modelos para modelos candidatos ETS.}
 \label{tab:mod_ets}
 \centering
 \begin{tabular}[t]{lr}
@@ -44,6 +44,7 @@ $$ETS(M, Ad, M)$$
 Procedendo à análise de resíduos do modelo, tem-se que a figura \ref{fig:ets} apresenta resíduos que se parecem com um ruído branco, isto é, parecem se comportar de forma independente, com média nula e variância constante. O qqplot indica que o os erros não se ajustam bem à distribuição normal devido à sua variação com com respeito à reta de probabilidade normal. Os gráficos ACF e PACF reforçam que não sobrou correlação significativa entre os erros, os únicos saltos além da faixa que chaman mais atenção nos gráficos ACF e PACF não estão no lag sazonal e estão por bem pouco fora da faixa, levando a crer que o ajuste do modelo está adequado.
 
 \begin{figure}[!h]
+  \caption{Gráficos de linha, probabilidade normal, ACF e PACF para os resíduos do modelo ETS sem transformação de Box-Cox}
   \label{fig:ets}
   \centering
   \includegraphics[width=12cm]{assets/ets_mod.png}
@@ -53,7 +54,7 @@ Para apoiar a análise gráfica, a tabela \ref{tab:ets} apresenta testes de hip�
 
 \begin{table}[!h]
 
-\caption{}
+\caption{Teste de hipóteses para pressupostos do modelo ETS sem transfomação de Box-Cox}
 \label{tab:ets}
 \centering
 \begin{tabular}[t]{llrr}
@@ -77,6 +78,7 @@ $$ETS(A, A, A)$$
 De forma análoga ao modelo ETS sem a transformação de Box-Cox, tem-se a figura \ref{fig:ets_box-cox} e a tabela \ref{tab:Ets_box-cox} que indicam que o modelo com a transformação de Box-Cox atende todos os pressupostos, uma vez que seu gráfico de linha para o resíduo se parece com um ruído branco, pelo teste de Ljung-Box com `lag = 15` conclui-se independência dos resíduos, ponto que é sustentado pelos gráficos ACF e PACF, pelo teste de Shapiro-Wilk e gráfico de probabilidade normal conclui-se que os resíduos seguem distribuição normal e pelo teste KPSS os resíduos descrevem um processo estacionário.
 
 \begin{figure}[!h]
+  \caption{Gráficos de linha, probabilidade normal, ACF e PACF para os resíduos do modelo ETS com transformação de Box-Cox}
   \label{fig:ets_box-cox}
   \centering
   \includegraphics[width=12cm]{assets/ets_mod_boxcox.png}
@@ -84,7 +86,7 @@ De forma análoga ao modelo ETS sem a transformação de Box-Cox, tem-se a figur
 
 \begin{table}[!h]
 \label{tab:ets_box-cox}
-\caption{}
+\caption{Teste de hipóteses para pressupostos do modelo ETS com transformação de Box-Cox}
 \centering
 \begin{tabular}[t]{llrr}
 \toprule
@@ -104,6 +106,7 @@ X-squared & Ljung-Box & 21.451 & 0.123\\
 Uma vez que o modelo ETS escolhido sem a transformação de Box-Cox falhou para o teste de normalidade, portanto, foi feito o uso da técnica de Bootstrap calculando quantis empíricos da amostra de resíduos obtida para compor as previsões intervalares, que podem ser observadas no gráfico da esquerda na figura \ref{fig:pred_ets}. Para o gráfico da direita na figura \ref{fig:pred_ets} tem-se o modelo ETS com transformação de Box-Cox, que não rejeitou a hipótese de normalidade para o teste de Shapiro-Wilk, portanto foram calculadas a partir dos quantis da distribuição normal padrão. Ambos os gráficos apresentam uma linha em vermelho que representa o caminho verdadeiro que a série percorreu.
 
 \begin{figure}[!h]
+  \caption{Gráficos de linhas para as previsões intervales dos modelos ETS escolhidos com e sem a transformação de Box-Cox, respectivamente.}
   \label{fig:pred_ets}
   \centering
   \includegraphics[width=12cm]{assets/predictions.png}
