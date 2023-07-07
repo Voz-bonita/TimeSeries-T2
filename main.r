@@ -111,4 +111,7 @@ MAEs <- map2_dbl(models, names(models), ~ MAE(
     model = .x, train = treinamento, test = teste, h = horizonte, name = .y
 ))
 data.frame("Implementação" = names(MAEs), "MAE" = MAEs) %>%
-    format_tab("", digits = 4, format = "latex")
+    format_tab(
+        glue("Erro médio absoluto para as predições de {horizonte} passos a frente."),
+        digits = 2, format = "latex"
+    )

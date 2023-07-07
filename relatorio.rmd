@@ -113,3 +113,30 @@ Uma vez que o modelo ETS escolhido sem a transformação de Box-Cox falhou para 
 \end{figure}
 
 Um ponto interessante é que embora ambas as previsões intervalares para os dois modelos contenham os resultados reais (linha em vermelho), tem-se que o modelo ETS sem a transformação e Box-Cox aparenta ter se saído muito melhor em termos de replicar o comportamento da série e fornecer intervalos mais fechados, mas que ainda sim capturem o verdadeiro valor observado para a série.
+
+## MAE
+
+\begin{table}[!h]
+
+\caption{Erro médio absoluto para as predições de 18 passos a frente.}
+\centering
+\begin{tabular}[t]{llr}
+\toprule
+  & Implementação & MAE\\
+\midrule
+\cellcolor{gray!6}{ARIMA (manual)} & \cellcolor{gray!6}{ARIMA (manual)} & \cellcolor{gray!6}{366.96}\\
+ARIMA (manual)(Box-Cox) & ARIMA (manual)(Box-Cox) & 442.32\\
+\cellcolor{gray!6}{ETS (manual)} & \cellcolor{gray!6}{ETS (manual)} & \cellcolor{gray!6}{503.22}\\
+ETS (manual)(Box-Cox) & ETS (manual)(Box-Cox) & 896.41\\
+\cellcolor{gray!6}{auto.arima} & \cellcolor{gray!6}{auto.arima} & \cellcolor{gray!6}{411.15}\\
+\addlinespace
+ses & ses & 1095.08\\
+\cellcolor{gray!6}{holt} & \cellcolor{gray!6}{holt} & \cellcolor{gray!6}{904.89}\\
+ets & ets & 503.22\\
+\cellcolor{gray!6}{stlf} & \cellcolor{gray!6}{stlf} & \cellcolor{gray!6}{556.73}\\
+bats & bats & 968.30\\
+\addlinespace
+\cellcolor{gray!6}{tbats} & \cellcolor{gray!6}{tbats} & \cellcolor{gray!6}{790.82}\\
+\bottomrule
+\end{tabular}
+\end{table}
