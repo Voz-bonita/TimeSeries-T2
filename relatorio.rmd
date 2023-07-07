@@ -116,27 +116,32 @@ Um ponto interessante é que embora ambas as previsões intervalares para os doi
 
 ## MAE
 
+As métricas MAE para cada um dos modelos implementados e os \textit{benchmarks} da biblioteca `forecast` estão apresentados na tabela \ref{tab:mae}, de onde observa-se que os modelos com melhorhes desempenhos preditivos segundo o MAE foram a escolha manual do SARIMA(1, 1, 3)x(1, 0, 1)_{12}, o `auto.arima` e a escolha manual do SARIMA(1, 1, 2)x(0, 0, 2)_{12} com a transformação de Box-Cox, nessa ordem, do melhor para o terceiro melhor.
+
 \begin{table}[!h]
 
+\label{tab:mae}
 \caption{Erro médio absoluto para as predições de 18 passos a frente.}
 \centering
-\begin{tabular}[t]{llr}
+\begin{tabular}[t]{lr}
 \toprule
-  & Implementação & MAE\\
+Implementação & MAE\\
 \midrule
-\cellcolor{gray!6}{ARIMA (manual)} & \cellcolor{gray!6}{ARIMA (manual)} & \cellcolor{gray!6}{366.96}\\
-ARIMA (manual)(Box-Cox) & ARIMA (manual)(Box-Cox) & 442.32\\
-\cellcolor{gray!6}{ETS (manual)} & \cellcolor{gray!6}{ETS (manual)} & \cellcolor{gray!6}{503.22}\\
-ETS (manual)(Box-Cox) & ETS (manual)(Box-Cox) & 896.41\\
-\cellcolor{gray!6}{auto.arima} & \cellcolor{gray!6}{auto.arima} & \cellcolor{gray!6}{411.15}\\
+\cellcolor{gray!6}{ARIMA (manual)} & \cellcolor{gray!6}{366.96}\\
+ARIMA (manual)(Box-Cox) & 442.32\\
+\cellcolor{gray!6}{ETS (manual)} & \cellcolor{gray!6}{503.22}\\
+ETS (manual)(Box-Cox) & 896.41\\
+\cellcolor{gray!6}{auto.arima} & \cellcolor{gray!6}{411.15}\\
 \addlinespace
-ses & ses & 1095.08\\
-\cellcolor{gray!6}{holt} & \cellcolor{gray!6}{holt} & \cellcolor{gray!6}{904.89}\\
-ets & ets & 503.22\\
-\cellcolor{gray!6}{stlf} & \cellcolor{gray!6}{stlf} & \cellcolor{gray!6}{556.73}\\
-bats & bats & 968.30\\
+ses & 1095.08\\
+\cellcolor{gray!6}{holt} & \cellcolor{gray!6}{904.89}\\
+ets & 503.22\\
+\cellcolor{gray!6}{stlf} & \cellcolor{gray!6}{556.73}\\
+bats & 968.30\\
 \addlinespace
-\cellcolor{gray!6}{tbats} & \cellcolor{gray!6}{tbats} & \cellcolor{gray!6}{790.82}\\
+\cellcolor{gray!6}{tbats} & \cellcolor{gray!6}{790.82}\\
 \bottomrule
 \end{tabular}
 \end{table}
+
+Outro ponto que vale destaque é que a escolha manual do modelo ETS(M, Ad, M) concidiu com o benchmark automático `ets` da biblioteca `forecast` e que de fato a escolha do modelo sem a transformação de Box-Cox se saiu melhor que que a versão com a transformação ed Box-Cox, suspeita que já tinha sido instaurada durante a análise das predições pontuais e intervales da figura \ref{fig:pred_ets}.
