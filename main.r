@@ -70,7 +70,10 @@ df_teste_plot <- data.frame(
     "x" = as.vector(time(teste)),
     "y" = as.vector(teste)
 )
-p3 <- forecast(ets_mod, h = horizonte, level = 95, bootstrap = TRUE) %>%
+# Tabelas nas próximas duas linhas
+(pred_ets <- forecast(ets_mod, h = horizonte, level = 95, bootstrap = TRUE))
+(pred_ets_boxcox <- forecast(ets_mod_boxcox, h = horizonte, level = 95))
+p3 <- pred_ets %>%
     prediction_plot() +
     geom_line(
         data = df_teste_plot, aes(x = `x`, y = `y`),
@@ -79,7 +82,7 @@ p3 <- forecast(ets_mod, h = horizonte, level = 95, bootstrap = TRUE) %>%
     scale_y_continuous(breaks = seq(4000, 16000, 4000)) +
     coord_cartesian(ylim = c(3800, 16000))
 
-p4 <- forecast(ets_mod_boxcox, h = horizonte, level = 95) %>%
+p4 <- pred_ets_boxcox %>%
     prediction_plot() +
     geom_line(
         data = df_teste_plot, aes(x = `x`, y = `y`),

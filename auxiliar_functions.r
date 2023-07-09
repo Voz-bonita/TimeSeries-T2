@@ -90,6 +90,12 @@ residuals_analysis <- function(model, path_to_plot) {
 
 prediction_plot <- function(forecast_prediction) {
     return(autoplot(forecast_prediction) +
+        xlab("Anos") +
+        ylab("Depósitos Totais (bilhões de dólares)") +
+        scale_x_continuous(
+            breaks = seq(from = 1983, to = 1995, by = 1),
+            limits = c(1983, 1995)
+        ) +
         geom_line(linewidth = 1.3) +
         theme_bw())
 }
